@@ -1,0 +1,44 @@
+$--background-color: linear-gradient(45deg, #409eff 0%, #9e7ffe 100%);
+$--main-color: #6E90FE;
+
+html, body {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	font-family: Trebuchet MS;
+	font-weight: 900;
+	-webkit-font-smoothing: antialiased;
+	-webkit-tap-highlight-color: transparent;
+
+	background: $--background-color;
+}
+
+.el-header {
+	padding: 0 !important;
+}
+
+.el-container {
+	margin: 0 auto;
+	max-width: 1340px;
+}
+
+.el-main {
+	overflow: hidden !important;
+}
+
+.el-card {
+	box-shadow: none !important;
+	border: none !important;
+	overflow: initial !important;
+
+	button {
+		border: none !important;
+	}
+}
+
+@import "./components/user/common/login-register.scss";
+@import "./components/user/common/bear.scss";
