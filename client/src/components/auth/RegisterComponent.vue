@@ -40,7 +40,7 @@
 			<div class="register-login-info-text">
 				<p>
 					Need to login?
-					<span class="button-text" @click="goToPath('/login')">Click here to register!</span>
+					<span class="button-text" @click="goToPath('/login')">Click here to login!</span>
 				</p>
 			</div>
 		</el-main>

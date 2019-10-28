@@ -1,0 +1,19 @@
+$--name-email-height: 22px;
+$--text-indent: 15px;
+
+.name, .email {
+	display: inline-block;
+	min-height: $--name-email-height;	line-height: $--name-email-height;
+	text-indent: $--text-indent;
+	color: $--text-color;
+
+	font-size: 1.1em;
+}
+.name {
+	color: $--text-color;
+	font-size: 1.1em;
+}
+.email {
+	color: lighten($--text-color, 15%);
+	font-size: .8em;
+}

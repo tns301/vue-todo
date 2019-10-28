@@ -6,8 +6,7 @@ module.exports = function (req, res, next) {
 	if (!token) return res.status(401).send({ status: 'denied', message: 'access denied' });
 
 	try {
-		const verifyToken = jwt.verify(token, process.env.TOKEN_SECRET);
-		req.id = verifyToken;
+		res.locals.id = jwt.verify(token, process.env.TOKEN_SECRET).id;
 	} catch (error) {
 		return res.status(401).send({ status: 'token expired', message: 'session expired, please login in' });
 	}

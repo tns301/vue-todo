@@ -1,5 +1,6 @@
 $--background-color: linear-gradient(45deg, #409eff 0%, #9e7ffe 100%);
 $--main-color: #6E90FE;
+$--text-color: #4057bd;
 
 html, body {
 	padding: 0;
@@ -40,5 +41,6 @@ body {
 	}
 }
 
-@import "./components/user/common/login-register.scss";
-@import "./components/user/common/bear.scss";
+@import "./components/auth/common/login-register.scss";
+@import "./components/auth/common/bear.scss";
+@import "./components/user/user-card.scss";

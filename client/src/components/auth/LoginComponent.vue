@@ -28,7 +28,7 @@
 			<div class="register-login-info-text">
 				<p>
 					Don't have an account?
-					<span class="button-text" @click="goToPath('/register')">Click here to login!</span>
+					<span class="button-text" @click="goToPath('/register')">Click here to register!</span>
 				</p>
 			</div>
 		</el-main>

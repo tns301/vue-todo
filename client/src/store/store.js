@@ -8,21 +8,26 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
-		
+		userInfo: {
+			name: 'User',
+			email: ''
+		}
 	},
 	mutations: {
-
+		setUserInfo(state, paylaod) {
+			state.userInfo = paylaod;
+		}
 	},
 	actions: {
 		registerUserAccount(context, payload) {
 			return new Promise((resolve, reject) => {
 				ApiService.post('/api/register', payload)
-					.then((response) => {
+					.then(() => {
 						router.push({ path: '/login' })
-						resolve(response.data);
+						resolve()
 					})
 					.catch((error) => {
-						reject(error);
+						reject(error)
 					})
 			});
 		},
@@ -32,7 +37,7 @@ export default new Vuex.Store({
 					.then((response) => {
 						TokenService.saveToken(response.headers['auth-token'])
 						router.push({ path: '/home' })
-						resolve(response.data);
+						resolve()
 					})
 					.catch((error) => {
 						reject(error);
@@ -41,9 +46,10 @@ export default new Vuex.Store({
 		},
 		getUserInfo(context, payload) {
 			return new Promise((resolve, reject) => {
-				ApiService.get('/api/todo/get', payload)
+				ApiService.get('/api/user/get', payload)
 					.then((response) => {
-						resolve(response.data);
+						context.commit('setUserInfo', response.data.response)
+						resolve(response.data)
 					})
 					.catch((error) => {
 						reject(error);
@@ -51,11 +57,13 @@ export default new Vuex.Store({
 			});
 		},
 		logOutUser() {
-			TokenService.removeToken();
+			TokenService.removeToken()
 			router.push({ path: '/login' })
 		},
 	},
 	getters: {
-
+		returnUserInfo(state) {
+			return state.userInfo
+		}
 	},
 })

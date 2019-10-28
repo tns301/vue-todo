@@ -4,7 +4,7 @@ import TokenService from "../service/token";
 import ApiService from "../service/api"
 
 // Components
-import LoginComponent from "../components/user/LoginComponent";
+import LoginComponent from "../components/auth/LoginComponent";
 
 Vue.use(VueRouter)
 
@@ -26,7 +26,7 @@ const router = new VueRouter({
 				next();
 			},
 			path: '/register',
-			component: () => import("../components/user/RegisterComponent"),
+			component: () => import("../components/auth/RegisterComponent"),
 			meta: {
 				public: true
 			},
