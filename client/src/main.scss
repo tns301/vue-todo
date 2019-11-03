@@ -18,8 +18,33 @@ body {
 	background: $--background-color;
 }
 
+.card-space {
+	padding-left: 10px;
+	padding-right: 10px;
+	float: left;
+
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+
+	&.main {
+		width: 75%;
+	}
+}
+
+.el-form {
+	padding: 1em !important;
+}
+
+.no-padding {
+	padding: 0 !important;
+}
+
 .el-header {
 	padding: 0 !important;
+}
+
+.el-avatar {
+	background: $--background-color !important;
 }
 
 .el-container {
@@ -29,16 +54,22 @@ body {
 
 .el-main {
 	overflow: hidden !important;
+	margin-top: 25px;
+}
+
+.login {
+	&.el-card {
+		overflow: initial;
+	}
 }
 
 .el-card {
 	box-shadow: none !important;
 	border: none !important;
-	overflow: initial !important;
+}
 
-	button {
-		border: none !important;
-	}
+.el-message-box__title, .el-message-box__content, .el-card, .el-page-header__content {
+	color: $--text-color !important;
 }
 
 @import "./components/auth/common/login-register.scss";

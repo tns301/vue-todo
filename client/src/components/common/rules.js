@@ -21,10 +21,17 @@ export const rules = {
 						trigger: "blur"
 					}
 				],
-				name: [
+				firstName: [
 					{
 						required: true,
-						message: "Please input the name",
+						message: "Please input your first name",
+						trigger: "blur",
+					}
+				],
+				lastName: [
+					{
+						required: true,
+						message: "Please input your last name",
 						trigger: "blur",
 					}
 				],

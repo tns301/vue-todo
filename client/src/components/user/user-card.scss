@@ -1,19 +1,33 @@
 $--name-email-height: 22px;
-$--text-indent: 15px;
 
-.name, .email {
-	display: inline-block;
-	min-height: $--name-email-height;	line-height: $--name-email-height;
-	text-indent: $--text-indent;
-	color: $--text-color;
-
-	font-size: 1.1em;
+.el-submenu__title, .el-menu-item {
+	color: $--text-color !important;
+	
+	height: auto !important;
+	min-height: 56px;
+	white-space: unset !important;
 }
+.el-menu {
+	border: none !important;
+}
+
+.el-submenu__icon-arrow {
+	margin-top: -4px !important;
+}
+
+.el-menu-item i {
+	font-size: 22px !important;
+}
+
+.user-menu {
+	float: left;
+	width: 300px;
+}
+
 .name {
-	color: $--text-color;
+	display: inline-block;
+	width: 74%;
+	min-height: $--name-email-height;	line-height: $--name-email-height;
 	font-size: 1.1em;
-}
-.email {
-	color: lighten($--text-color, 15%);
-	font-size: .8em;
+	margin-left: 10px;
 }

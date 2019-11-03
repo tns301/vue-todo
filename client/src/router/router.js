@@ -34,6 +34,16 @@ const router = new VueRouter({
 		{
 			path: '/home',
 			component: () => import("../components/home/HomeMain"),
+			children: [
+				{
+					path: '',
+					component: () => import("../components/todo/TodoItems"),
+				},
+				{
+					path: 'edit',
+					component: () => import("../components/edit-account/EditAccount"),
+				},
+			]
 		},
 		{
 			path: '*',

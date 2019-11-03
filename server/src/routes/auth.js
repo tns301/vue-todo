@@ -1,13 +1,15 @@
 const router = require("express").Router();
 const bycrpt = require("bcryptjs");
-const { validateRegister, loginRegister } = require("../model/user/validation");
-const User = require("../model/user/user");
+const { validateRegister } = require("../model/user/validation");
 const jwt = require('jsonwebtoken');
+const User = require("../model/user/user");
 
 router.post("/register", async (req, res) => {
+	if (req.body.password !== req.body.passwordConfirm) return res.status(400).send({ status: "error", message: 'password does not match' })
+	
 	const { error } = await validateRegister(req.body);
 	if (error) return res.status(400).send({ status: "error", message: error.details[0].message })
-
+	
 	const emailExist = await User.findOne({ email: req.body.email });
 	if (emailExist) return res.status(400).send({ status: "error", message: 'email is already in use, please choose another email' })
 
@@ -15,13 +17,16 @@ router.post("/register", async (req, res) => {
 	const hashedPassword = await bycrpt.hash(req.body.password, salt);
 
 	const USER = new User({
-		name: req.body.name,
+		firstName: req.body.firstName,
+		lastName: req.body.lastName,
 		email: req.body.email,
-		password: hashedPassword
+		password: hashedPassword,
+		avatar: "0" || req.body.avatar
 	});
 
 	try {
 		await USER.save();
+		
 		res.send({ status: "success", message: 'account created' });
 	} catch (err) {
 		res.status(400).send({ status: "error", message: err })
@@ -29,9 +34,6 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-	const { error } = await loginRegister(req.body);
-	if (error) return res.status(400).send({ status: "error", message: error.details[0].message })
-
 	const user = await User.findOne({ email: req.body.email });
 	if (!user) return res.status(400).send({ status: "error", message: 'email or password is invalid' })
 

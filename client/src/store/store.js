@@ -9,9 +9,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		userInfo: {
-			name: 'User',
-			email: ''
-		}
+			firstName: "First",
+			lastName: "Last",
+			email: "",
+			avatar: "0"
+		},
 	},
 	mutations: {
 		setUserInfo(state, paylaod) {
@@ -24,6 +26,18 @@ export default new Vuex.Store({
 				ApiService.post('/api/register', payload)
 					.then(() => {
 						router.push({ path: '/login' })
+						resolve()
+					})
+					.catch((error) => {
+						reject(error)
+					})
+			});
+		},
+		editUserAccount(context, payload) {
+			return new Promise((resolve, reject) => {
+				ApiService.put('/api/user/edit', payload)
+					.then(() => {
+						router.push({ path: '/' })
 						resolve()
 					})
 					.catch((error) => {
@@ -58,6 +72,8 @@ export default new Vuex.Store({
 		},
 		logOutUser() {
 			TokenService.removeToken()
+			ApiService.removeHeader()
+			
 			router.push({ path: '/login' })
 		},
 	},

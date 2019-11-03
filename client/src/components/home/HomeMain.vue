@@ -3,17 +3,15 @@
 		<el-main>
 			<el-row :gutter="20">
 				<UserCard />
-				<el-col :span="18">
-					<el-card>Todo</el-card>
-				</el-col>
+				<transition name="el-zoom-in-center" mode="out-in">
+					<router-view></router-view>
+				</transition>
 			</el-row>
 		</el-main>
 	</el-container>
 </template>
 
 <script>
-
-import TokenService from "../../service/token";
 import ApiService from "../../service/api";
 
 // Components
@@ -22,7 +20,7 @@ import UserCard from "../user/UserCard";
 export default {
 	name: "HomeMain",
 	created() {
-		ApiService.setHeader(TokenService.getToken());
+		ApiService.setHeader();
 	},
 	components: {
 		UserCard

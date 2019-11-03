@@ -28,7 +28,10 @@
 			<div class="register-login-info-text">
 				<p>
 					Don't have an account?
-					<span class="button-text" @click="goToPath('/register')">Click here to register!</span>
+					<span
+						class="button-text"
+						@click="goToPath('/register')"
+					>Click here to register!</span>
 				</p>
 			</div>
 		</el-main>
@@ -37,9 +40,9 @@
 
 <script>
 import { mapActions } from "vuex";
-import { rules } from "./common/rules";
-import { validation } from "./common/validation";
-import { goToPath } from "./common/routerNavigation";
+import { rules } from "../common/rules";
+import { validation } from "../common/validation";
+import { goToPath } from "../common/router-navigation";
 
 export default {
 	name: "LoginComponent",

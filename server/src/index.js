@@ -8,7 +8,7 @@ const port = process.env.PORT_SERVER;
 
 // Routes
 const authRoute = require("./routes/auth");
-const userInfo = require("./routes/userInfo");
+const userInfo = require("./routes/user-info");
 
 console.log("\n");
 console.log(`Config: Loaded`);

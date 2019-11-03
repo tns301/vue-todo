@@ -1,22 +1,16 @@
 <template>
-	<el-container>
-		<el-main>
-			<el-card class="box-card login">
-				<div class="bear-align">
-					<div class="bear body bodySlant">
-						<div class="face"></div>
-						<div class="features"></div>
-					</div>
-				</div>
-				<p class="login-register-text">Register</p>
-				<el-form ref="form" :model="form" :rules="rules">
+	<div class="card-space main">
+		<el-card>
+			<el-page-header @back="goToPath('/')" content="Edit account"></el-page-header>
+			<el-form ref="form" :model="form" :rules="rules">
+				<p>User info</p>
 				<el-row :gutter="20">
 					<el-col :span="12">
 						<el-form-item prop="firstName">
 							<el-input placeholder="First Name" v-model="form.firstName" prefix-icon="el-icon-user" />
 						</el-form-item>
 					</el-col>
-						<el-col :span="12">
+					<el-col :span="12">
 						<el-form-item prop="lastName">
 							<el-input placeholder="Last Name" v-model="form.lastName" prefix-icon="el-icon-user" />
 						</el-form-item>
@@ -49,56 +43,83 @@
 						</el-form-item>
 					</el-col>
 				</el-row>
-				</el-form>
-				<el-button type="primary" class="login-button" @click="submitForm('form')">Register</el-button>
-			</el-card>
-			<div class="register-login-info-text">
-				<p>
-					Need to login?
-					<span class="button-text" @click="goToPath('/login')">Click here to login!</span>
-				</p>
-			</div>
-		</el-main>
-	</el-container>
+				<p>Select avatar</p>
+				<el-row :gutter="20">
+					<el-col :span="24">
+						<el-form-item>
+							<el-radio v-model="form.avatar" v-for="(eachAvatar, key) in logo" :key="eachAvatar" :label="key">
+								<el-avatar :size="70" :src="eachAvatar"></el-avatar>
+							</el-radio>
+						</el-form-item>
+					</el-col>
+				</el-row>
+			</el-form>
+			<el-button @click="goToPath('/')">Cancel</el-button>
+			<el-button type="primary" @click="submitForm('form')">Update</el-button>
+		</el-card>
+	</div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { rules } from "../common/rules";
 import { validation } from "../common/validation";
 import { goToPath } from "../common/router-navigation";
+import { avatar } from "../common/user-avatar";
 
 export default {
-	name: "RegisterComponent",
-	mixins: [rules, validation, goToPath],
+	name: "EditAccount",
+	mixins: [rules, validation, goToPath, avatar],
 	data() {
 		return {
 			form: {
 				firstName: "",
 				lastName: "",
 				email: "",
+				avatar: "",
 				passwordRegisterFirst: "",
 				passwordRegisterSecond: ""
-			}
+			},
 		};
 	},
 	methods: {
 		submitForm(formName) {
 			this.$refs[formName].validate(valid => {
 				if (valid) {
-					this.registerUserAccount({
+					this.editUserAccount({
 						firstName: this.form.firstName,
 						lastName: this.form.lastName,
 						email: this.form.email,
 						password: this.form.passwordRegisterFirst,
 						passwordConfirm: this.form.passwordRegisterSecond,
-					}).catch(err => {
-						console.error(err);
-					});
+						avatar: this.form.avatar
+					})
+						.then(() => {
+							this.getUserInfo();
+						})
+						.catch(err => {
+							console.error(err);
+						});
 				}
 			});
 		},
-		...mapActions(["registerUserAccount"])
+		...mapActions(["editUserAccount", "getUserInfo"])
+	},
+	computed: {
+		...mapGetters(["returnUserInfo"])
+	},
+	watch: {
+		returnUserInfo: {
+			immediate: true,
+			handler() {
+				const userData = this.returnUserInfo
+
+				this.form.firstName = userData.firstName
+				this.form.lastName = userData.lastName
+				this.form.email = userData.email
+				this.form.avatar = userData.avatar
+			}
+		}
 	}
 };
 </script>

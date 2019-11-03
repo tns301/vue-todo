@@ -1,42 +1,51 @@
 <template>
-	<el-col :span="6">
-		<el-card>
-			<el-row :gutter="20">
-				<el-col :span="4">
-					<el-avatar :src="defaultImage"></el-avatar>
-				</el-col>
-				<el-col :span="20">
-					<el-row :gutter="20">
-					<span class="name">{{ returnUserInfo.name }}</span>
-					</el-row>
-					<el-row :gutter="20">
-					<span class="email">{{ returnUserInfo.email }}</span>
-					</el-row>
-				</el-col>
-			</el-row>
+	<div class="card-space">
+		<el-card class="user-menu">
+			<el-menu>
+				<el-submenu index="1">
+					<template slot="title">
+						<el-avatar :src="logo[returnUserInfo.avatar]"></el-avatar>
+						<span class="name">{{ returnUserInfo.firstName }} {{ returnUserInfo.lastName }}</span>
+					</template>
+					<el-menu-item-group>
+						<el-menu-item index="1-1" @click="goToPath('home/edit')">
+							<i class="el-icon-edit-outline"></i>Edit account
+						</el-menu-item>
+					</el-menu-item-group>
+					<el-menu-item-group>
+						<el-menu-item index="1-2" @click="signOut">
+							<i class="el-icon-switch-button"></i>Logout
+						</el-menu-item>
+					</el-menu-item-group>
+				</el-submenu>
+			</el-menu>
 			<el-divider></el-divider>
 		</el-card>
-	</el-col>
+	</div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-
-// images
-import defaultUser from "../../../public/assets/img/default-user.png";
+import { goToPath } from "../common/router-navigation";
+import { avatar } from "../common/user-avatar";
 
 export default {
 	name: "UserCard",
-	data() {
-		return {
-			defaultImage: defaultUser
-		};
-	},
+	mixins: [goToPath, avatar],
 	created() {
 		this.getUserInfo();
 	},
 	methods: {
-		...mapActions(["getUserInfo"])
+		signOut() {
+			this.$confirm("Are you sure you want to logout?", "Warning", {
+				confirmButtonText: "Yes",
+				cancelButtonText: "Cancel",
+				type: "warning"
+			}).then(() => {
+				this.logOutUser();
+			});
+		},
+		...mapActions(["getUserInfo", "logOutUser"])
 	},
 	computed: {
 		...mapGetters(["returnUserInfo"])

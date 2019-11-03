@@ -3,9 +3,9 @@ export const validation = {
 		checkMatchPassword(rule, value, callback) {
 			if (value !== this.form.passwordRegisterFirst) {
 				callback(new Error("Oi! Password does not match"));
-			} else {
-				callback();
 			}
+			
+			callback();
 		},
 		checkSecurityPassword(rule, value, callback) {
 			let inputRegexes = [];
@@ -15,18 +15,17 @@ export const validation = {
 			inputRegexes[2] = { string: 'digit', valid: /[0-9]/.test(value)}
 			inputRegexes[3] = { string: 'special characters', valid: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(value)}
 
-			const numberOfError = inputRegexes.filter(eachError => !eachError.valid), arrLength = numberOfError.length
+			const numberOfError = inputRegexes.filter(eachError => !eachError.valid)
 			
-			if (arrLength > 0) {
-				let errMsg = `Password must contain `;
-				for (let i = 0; i < arrLength; i++) { 
-					errMsg += `${numberOfError[i].string}${i === arrLength - 1 ? ``: `, `}`
-				}
+			if (numberOfError.length > 0) {	
+				let errMsg = numberOfError.map(error => {
+					return ` ${error.string}`;
+				})
 
-				callback(new Error(errMsg));
-			} else {
-				callback();
+				callback(new Error(`Password must contain ${errMsg}`));
 			}
+			
+			callback();
 		}
 	}
 }
