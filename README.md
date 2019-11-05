@@ -1,9 +1,23 @@
 # vue-todo
 
 ## Project setup
-```
-npm install
-```
+*  **1.**
+
+    ```
+    npm install
+    ```
+
+*  **2.**
+  
+    Copy .env file from sample folder and place it in the root folder of the project
+
+*  **3.** 
+
+    Fill the values
+
+    **Note**: *MongoDB* is used as DB, a cluster from [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) is required
+
+## 
 
 ### Compiles and hot-reloads for development
 ```
@@ -29,6 +43,3 @@ npm run server
 ```
 npm run server-dev
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
