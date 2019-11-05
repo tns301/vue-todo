@@ -9,7 +9,7 @@
 
 *  **2.**
   
-    Copy .env file from sample folder and place it in the root folder of the project
+    Copy ***.env*** file from **sample** folder and place it in the **root** folder of the project
 
 *  **3.** 
 
