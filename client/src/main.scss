@@ -1,6 +1,4 @@
-$--background-color: linear-gradient(45deg, #409eff 0%, #9e7ffe 100%);
-$--main-color: #6E90FE;
-$--text-color: #4057bd;
+@import "./styles//variables/variables.scss";
 
 html, body {
 	padding: 0;
@@ -36,11 +34,7 @@ body {
 	padding: 1em !important;
 }
 
-.no-padding {
-	padding: 0 !important;
-}
-
-.el-header {
+.no-padding, .el-header {
 	padding: 0 !important;
 }
 
@@ -53,7 +47,7 @@ body {
 	border: none !important;
 }
 
-.el-message-box__title, .el-message-box__content, .el-card, .el-page-header__content {
+.el-message-box__title, .el-message-box__content, .el-card, .el-page-header__content, .el-submenu__title, .el-menu-item {
 	color: $--text-color !important;
 }
 
@@ -89,9 +83,8 @@ body {
   }
 }
 
-
-@import "./components/auth/common/login-register.scss";
-@import "./components/auth/common/bear.scss";
-@import "./components/user/user-card.scss";
-@import "./components/edit-account//edit-account.scss";
-@import "./components/todo/view-list.scss";
+@import "./styles/components/bear.scss";
+@import "./styles/components/edit-account.scss";
+@import "./styles/components/login-register.scss";
+@import "./styles/components/user-card.scss";
+@import "./styles/components/view-list.scss";
