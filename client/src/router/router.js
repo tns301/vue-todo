@@ -37,11 +37,15 @@ const router = new VueRouter({
 			children: [
 				{
 					path: '',
-					component: () => import("../components/todo/TodoItems"),
+					component: () => import("../components/todo/DashboardList"),
 				},
 				{
-					path: 'edit',
+					path: 'edit-account',
 					component: () => import("../components/edit-account/EditAccount"),
+				},
+				{
+					path: 'list-:type',
+					component: () => import("../components/todo/ViewList"),
 				},
 			]
 		},
@@ -53,20 +57,22 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-	const isPublic = to.matched.some(record => record.meta.public);
+	const isPrivate = !to.matched.some(record => record.meta.public);
 	const isLoginPage = to.matched.some(record => record.meta.loginPage);
-	const isLoggedIn = TokenService.getToken();
+	const tokenFound = TokenService.getToken();
 
-	if (!isPublic && !isLoggedIn) {
-		return next({
-			path: '/login',
-		});
-	}
-
-	if (isLoggedIn && isLoginPage) {
-		return next({
-			path: '/home',
-		});
+	if (tokenFound) {
+		if (isLoginPage) {
+			return next({
+				path: '/home',
+			});
+		}
+	} else {
+		if (isPrivate) {
+			return next({
+				path: '/login',
+			});
+		}
 	}
 
 	next();

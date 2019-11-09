@@ -1,63 +1,70 @@
 <template>
-	<div class="card-space main">
-		<el-card>
-			<el-page-header @back="goToPath('/')" content="Edit account"></el-page-header>
-			<el-form ref="form" :model="form" :rules="rules">
-				<p>User info</p>
-				<el-row :gutter="20">
-					<el-col :span="12">
-						<el-form-item prop="firstName">
-							<el-input placeholder="First Name" v-model="form.firstName" prefix-icon="el-icon-user" />
-						</el-form-item>
-					</el-col>
-					<el-col :span="12">
-						<el-form-item prop="lastName">
-							<el-input placeholder="Last Name" v-model="form.lastName" prefix-icon="el-icon-user" />
-						</el-form-item>
-					</el-col>
-					<el-col :span="24">
-						<el-form-item prop="email">
-							<el-input placeholder="Email" v-model="form.email" prefix-icon="el-icon-message" />
-						</el-form-item>
-					</el-col>
-					<el-col :span="12">
-						<el-form-item prop="passwordRegisterFirst">
-							<el-input
-								placeholder="Password"
-								type="password"
-								autocomplete="off"
-								v-model="form.passwordRegisterFirst"
-								prefix-icon="el-icon-lock"
-							/>
-						</el-form-item>
-					</el-col>
-					<el-col :span="12">
-						<el-form-item prop="passwordRegisterSecond">
-							<el-input
-								placeholder="Confirm password"
-								type="password"
-								autocomplete="off"
-								v-model="form.passwordRegisterSecond"
-								prefix-icon="el-icon-lock"
-							/>
-						</el-form-item>
-					</el-col>
-				</el-row>
-				<p>Select avatar</p>
-				<el-row :gutter="20">
-					<el-col :span="24">
-						<el-form-item>
-							<el-radio v-model="form.avatar" v-for="(eachAvatar, key) in logo" :key="eachAvatar" :label="key">
-								<el-avatar :size="70" :src="eachAvatar"></el-avatar>
-							</el-radio>
-						</el-form-item>
-					</el-col>
-				</el-row>
-			</el-form>
-			<el-button @click="goToPath('/')">Cancel</el-button>
-			<el-button type="primary" @click="submitForm('form')">Update</el-button>
-		</el-card>
-	</div>
+	<el-card>
+		<el-page-header @back="goToPath('/')" content="Edit account"></el-page-header>
+		<el-form ref="form" :model="form" :rules="rules">
+			<p>User info</p>
+			<div class="row">
+				<div class="col-6">
+					<el-form-item prop="firstName">
+						<el-input placeholder="First Name" v-model="form.firstName" prefix-icon="el-icon-user" />
+					</el-form-item>
+				</div>
+				<div class="col-6">
+					<el-form-item prop="lastName">
+						<el-input placeholder="Last Name" v-model="form.lastName" prefix-icon="el-icon-user" />
+					</el-form-item>
+				</div>
+				<div class="col-12">
+					<el-form-item prop="email">
+						<el-input placeholder="Email" v-model="form.email" prefix-icon="el-icon-message" />
+					</el-form-item>
+				</div>
+				<div class="col-6">
+					<el-form-item prop="passwordRegisterFirst">
+						<el-input
+							placeholder="Password"
+							type="password"
+							autocomplete="off"
+							v-model="form.passwordRegisterFirst"
+							prefix-icon="el-icon-lock"
+						/>
+					</el-form-item>
+				</div>
+				<div class="col-6">
+					<el-form-item prop="passwordRegisterSecond">
+						<el-input
+							placeholder="Confirm password"
+							type="password"
+							autocomplete="off"
+							v-model="form.passwordRegisterSecond"
+							prefix-icon="el-icon-lock"
+						/>
+					</el-form-item>
+				</div>
+			</div>
+			<p>Select avatar</p>
+			<div class="row">
+				<div class="col-12">
+					<el-form-item>
+						<el-radio
+							v-model="form.avatar"
+							v-for="(eachAvatar, key) in logo"
+							:key="eachAvatar"
+							:label="key"
+						>
+							<el-avatar :size="70" :src="eachAvatar"></el-avatar>
+						</el-radio>
+					</el-form-item>
+				</div>
+			</div>
+			<el-divider></el-divider>
+		</el-form>
+		<div class="row">
+			<div class="col-12">
+				<el-button type="primary" class="float-right" @click="submitForm('form')">Update</el-button>
+			</div>
+		</div>
+	</el-card>
 </template>
 
 <script>
@@ -79,7 +86,7 @@ export default {
 				avatar: "",
 				passwordRegisterFirst: "",
 				passwordRegisterSecond: ""
-			},
+			}
 		};
 	},
 	methods: {
@@ -112,12 +119,12 @@ export default {
 		returnUserInfo: {
 			immediate: true,
 			handler() {
-				const userData = this.returnUserInfo
+				const userData = this.returnUserInfo;
 
-				this.form.firstName = userData.firstName
-				this.form.lastName = userData.lastName
-				this.form.email = userData.email
-				this.form.avatar = userData.avatar
+				this.form.firstName = userData.firstName;
+				this.form.lastName = userData.lastName;
+				this.form.email = userData.email;
+				this.form.avatar = userData.avatar;
 			}
 		}
 	}

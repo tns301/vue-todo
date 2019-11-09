@@ -1,41 +1,39 @@
 <template>
-	<el-container>
-		<el-main>
-			<el-card class="box-card login">
-				<div class="bear-align">
-					<div class="bear body bodySlant">
-						<div class="face"></div>
-						<div class="features"></div>
-					</div>
+	<div class="container-fluid">
+		<el-card class="box-card login">
+			<div class="bear-align">
+				<div class="bear body bodySlant">
+					<div class="face"></div>
+					<div class="features"></div>
 				</div>
-				<p class="login-register-text">Login</p>
-				<el-form ref="form" :model="form" :rules="rules">
-					<el-form-item prop="email">
-						<el-input placeholder="Email" v-model="form.email" prefix-icon="el-icon-message" />
-					</el-form-item>
-					<el-form-item prop="password">
-						<el-input
-							placeholder="Password"
-							type="password"
-							autocomplete="off"
-							v-model="form.password"
-							prefix-icon="el-icon-lock"
-						/>
-					</el-form-item>
-				</el-form>
-				<el-button type="primary" class="login-button" @click="submitForm('form')">Login</el-button>
-			</el-card>
-			<div class="register-login-info-text">
-				<p>
-					Don't have an account?
-					<span
-						class="button-text"
-						@click="goToPath('/register')"
-					>Click here to register!</span>
-				</p>
 			</div>
-		</el-main>
-	</el-container>
+			<p class="login-register-text">Login</p>
+			<el-form ref="form" :model="form" :rules="rules">
+				<el-form-item prop="email">
+					<el-input placeholder="Email" v-model="form.email" prefix-icon="el-icon-message" />
+				</el-form-item>
+				<el-form-item prop="password">
+					<el-input
+						placeholder="Password"
+						type="password"
+						autocomplete="off"
+						v-model="form.password"
+						prefix-icon="el-icon-lock"
+					/>
+				</el-form-item>
+			</el-form>
+			<el-button type="primary" class="login-button" @click="submitForm('form')">Login</el-button>
+		</el-card>
+		<div class="register-login-info-text">
+			<p>
+				Don't have an account?
+				<span
+					class="button-text"
+					@click="goToPath('/register')"
+				>Click here to register!</span>
+			</p>
+		</div>
+	</div>
 </template>
 
 <script>

@@ -10,24 +10,30 @@ $--name-email-height: 22px;
 .el-menu {
 	border: none !important;
 }
-
 .el-submenu__icon-arrow {
 	margin-top: -4px !important;
 }
-
 .el-menu-item i {
 	font-size: 22px !important;
 }
-
-.user-menu {
-	float: left;
-	width: 300px;
+.full {
+	width: 100%;
 }
-
 .name {
 	display: inline-block;
 	width: 74%;
 	min-height: $--name-email-height;	line-height: $--name-email-height;
 	font-size: 1.1em;
 	margin-left: 10px;
+}
+.user-menu {
+	min-width: 310px;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+@media only screen and (max-width:767px){
+	.user-menu {
+		width: 100%;
+	}
 }

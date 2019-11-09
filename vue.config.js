@@ -11,8 +11,8 @@ module.exports = {
     port: process.env.PORT,
     proxy: {
         "/api/*": {
-            target: `http://localhost:${process.env.PORT_SERVER}`,
-            secure: false
+          target: `http://localhost:${process.env.PORT_SERVER}`,
+          secure: false
         }
     }
   },

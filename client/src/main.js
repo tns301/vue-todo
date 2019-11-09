@@ -4,6 +4,7 @@ import App from "./App.vue";
 
 // UI libs
 import "./plugins/element-ui/element.js";
+import "./assets/css/grid.min.css"
 
 // Vuex
 import store from "./store/store.js";

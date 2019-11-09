@@ -5,8 +5,6 @@ $--text-color: #4057bd;
 html, body {
 	padding: 0;
 	margin: 0;
-	width: 100%;
-	height: 100%;
 }
 
 body {
@@ -16,21 +14,24 @@ body {
 	-webkit-tap-highlight-color: transparent;
 
 	background: $--background-color;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
 
-.card-space {
-	padding-left: 10px;
-	padding-right: 10px;
-	float: left;
-
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-
-	&.main {
-		width: 75%;
-	}
+// Bootstrap
+.container {
+	max-width: 1340px !important; 
 }
 
+.center-block {
+	text-align: center;
+}
+
+.float-right {
+	float: right;
+}
+
+// Element UI
 .el-form {
 	padding: 1em !important;
 }
@@ -47,22 +48,6 @@ body {
 	background: $--background-color !important;
 }
 
-.el-container {
-	margin: 0 auto;
-	max-width: 1340px;
-}
-
-.el-main {
-	overflow: hidden !important;
-	margin-top: 25px;
-}
-
-.login {
-	&.el-card {
-		overflow: initial;
-	}
-}
-
 .el-card {
 	box-shadow: none !important;
 	border: none !important;
@@ -72,6 +57,41 @@ body {
 	color: $--text-color !important;
 }
 
+.bounce-enter-active {
+  animation: bounce-in .5s;
+}
+
+.bounce-leave-active {
+  animation: bounce-in .5s reverse;
+}
+
+// Custom css
+.align-app {
+	margin-top: 30px;
+}
+
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+		margin-top: -55px;
+		transform: scale(0);
+	}
+	30% {
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+		margin-top: 0px;
+		transform: scale(1);
+  }
+}
+
+
 @import "./components/auth/common/login-register.scss";
 @import "./components/auth/common/bear.scss";
 @import "./components/user/user-card.scss";
+@import "./components/edit-account//edit-account.scss";
+@import "./components/todo/view-list.scss";

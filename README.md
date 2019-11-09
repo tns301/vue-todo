@@ -24,16 +24,6 @@
 npm run app
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
 ### Starts the server with node
 ```
 npm run server
@@ -43,3 +33,8 @@ npm run server
 ```
 npm run server-dev
 ```
+
+<!-- ### Compiles and minifies for production the front-end app
+```
+npm run build
+``` -->

@@ -1,14 +1,16 @@
 <template>
-	<el-container>
-		<el-main>
-			<el-row :gutter="20">
+	<div class="container">
+		<div class="row">
+			<div class="user-menu align-app">
 				<UserCard />
+			</div>
+			<div class="col align-app">
 				<transition name="el-zoom-in-center" mode="out-in">
 					<router-view></router-view>
 				</transition>
-			</el-row>
-		</el-main>
-	</el-container>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>

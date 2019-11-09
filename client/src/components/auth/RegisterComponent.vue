@@ -1,32 +1,31 @@
 <template>
-	<el-container>
-		<el-main>
-			<el-card class="box-card login">
-				<div class="bear-align">
-					<div class="bear body bodySlant">
-						<div class="face"></div>
-						<div class="features"></div>
-					</div>
+	<div class="container-fluid">
+		<el-card class="box-card login">
+			<div class="bear-align">
+				<div class="bear body bodySlant">
+					<div class="face"></div>
+					<div class="features"></div>
 				</div>
-				<p class="login-register-text">Register</p>
-				<el-form ref="form" :model="form" :rules="rules">
-				<el-row :gutter="20">
-					<el-col :span="12">
+			</div>
+			<p class="login-register-text">Register</p>
+			<el-form ref="form" :model="form" :rules="rules">
+				<div class="row">
+					<div class="col-6">
 						<el-form-item prop="firstName">
 							<el-input placeholder="First Name" v-model="form.firstName" prefix-icon="el-icon-user" />
 						</el-form-item>
-					</el-col>
-						<el-col :span="12">
+					</div>
+					<div class="col-6">
 						<el-form-item prop="lastName">
 							<el-input placeholder="Last Name" v-model="form.lastName" prefix-icon="el-icon-user" />
 						</el-form-item>
-					</el-col>
-					<el-col :span="24">
+					</div>
+					<div class="col-12">
 						<el-form-item prop="email">
 							<el-input placeholder="Email" v-model="form.email" prefix-icon="el-icon-message" />
 						</el-form-item>
-					</el-col>
-					<el-col :span="12">
+					</div>
+					<div class="col-6">
 						<el-form-item prop="passwordRegisterFirst">
 							<el-input
 								placeholder="Password"
@@ -36,8 +35,8 @@
 								prefix-icon="el-icon-lock"
 							/>
 						</el-form-item>
-					</el-col>
-					<el-col :span="12">
+					</div>
+					<div class="col-6">
 						<el-form-item prop="passwordRegisterSecond">
 							<el-input
 								placeholder="Confirm password"
@@ -47,19 +46,18 @@
 								prefix-icon="el-icon-lock"
 							/>
 						</el-form-item>
-					</el-col>
-				</el-row>
-				</el-form>
-				<el-button type="primary" class="login-button" @click="submitForm('form')">Register</el-button>
-			</el-card>
-			<div class="register-login-info-text">
-				<p>
-					Need to login?
-					<span class="button-text" @click="goToPath('/login')">Click here to login!</span>
-				</p>
-			</div>
-		</el-main>
-	</el-container>
+					</div>
+				</div>
+			</el-form>
+			<el-button type="primary" class="login-button" @click="submitForm('form')">Register</el-button>
+		</el-card>
+		<div class="register-login-info-text">
+			<p>
+				Need to login?
+				<span class="button-text" @click="goToPath('/login')">Click here to login!</span>
+			</p>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -91,7 +89,7 @@ export default {
 						lastName: this.form.lastName,
 						email: this.form.email,
 						password: this.form.passwordRegisterFirst,
-						passwordConfirm: this.form.passwordRegisterSecond,
+						passwordConfirm: this.form.passwordRegisterSecond
 					}).catch(err => {
 						console.error(err);
 					});

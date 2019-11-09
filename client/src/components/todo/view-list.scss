@@ -1,0 +1,47 @@
+ul.todo {
+	padding-inline-start: 0;
+
+	li {
+		display: flex;
+		align-items: center;
+		list-style: none;
+		margin-bottom: 1em;
+
+		button {
+			padding: 0 1em 0 1em;
+		}
+
+		input {
+			border: none;
+			color: $--text-color;
+
+			font-weight: 900;
+			font-family: Trebuchet MS;
+			font-size: 1.2em;
+
+			transition: all ease-in-out 0.25s;
+		}
+	}
+	.el-input {
+		margin: 0 5px 0 5px;
+		
+		&.done {
+			input {
+				background-color: #fff;
+				color: lightgrey;
+
+				text-decoration: line-through;
+				font-style: italic;
+				transform: translateX(5px);
+			}
+			input::placeholder {
+				color: lightgrey;
+				text-decoration: line-through;
+			}
+		}
+	}
+}
+
+.el-select, .el-date-editor.el-input {
+	width: 100% !important;
+}
