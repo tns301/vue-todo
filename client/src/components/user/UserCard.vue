@@ -3,8 +3,8 @@
 		<el-menu>
 			<el-submenu index="1">
 				<template slot="title">
-					<el-avatar :src="logo[returnUserInfo.avatar]"></el-avatar>
-					<span class="name">{{ returnUserInfo.firstName }} {{ returnUserInfo.lastName }}</span>
+					<el-avatar :src="returnUserInfoMenu.avatarSrc"></el-avatar>
+					<span class="name">{{ returnUserInfoMenu.fullName }}</span>
 				</template>
 				<el-menu-item-group>
 					<el-menu-item index="1-1" @click="goToPath('/home/edit-account')">
@@ -19,11 +19,11 @@
 			</el-submenu>
 		</el-menu>
 		<el-divider></el-divider>
-		<ul>
-			<li v-for="list in returnListNames" :key="list">{{list}}</li>
+		<ul class="list mb-4">
+			<li class="p-2 mb-1" v-for="(list, key) in returnListNamesMenu" :key="key">{{list.typeSrc}} {{list.name}}</li>
 		</ul>
 		<el-button type="success" class="full" @click="goToPath('/home/list-add')">
-			<i class="el-icon-plus"></i> Add List
+			<i class="el-icon-plus"></i> Add a List
 		</el-button>
 	</el-card>
 </template>
@@ -31,11 +31,10 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import { goToPath } from "../common/router-navigation";
-import { avatar } from "../common/user-avatar";
 
 export default {
 	name: "UserCard",
-	mixins: [goToPath, avatar],
+	mixins: [goToPath],
 	created() {
 		this.getUserInfo();
 		this.getListData();
@@ -47,15 +46,15 @@ export default {
 				cancelButtonText: "Cancel",
 				type: "warning"
 			})
-				.then(() => {
-					this.logOutUser();
-				})
-				.catch(() => {});
+			.then(() => {
+				this.logOutUser();
+			})
+			.catch(() => {});
 		},
 		...mapActions(["getUserInfo", "logOutUser", "getListData"])
 	},
 	computed: {
-		...mapGetters(["returnUserInfo", "returnListNames"])
+		...mapGetters(["returnUserInfoMenu", "returnListNamesMenu"])
 	}
 };
 </script>

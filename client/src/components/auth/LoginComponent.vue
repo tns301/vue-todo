@@ -57,14 +57,14 @@ export default {
 		submitForm(formName) {
 			this.$refs[formName].validate(valid => {
 				if (valid) {
-					this.logInUserAccount(this.form)
+					this.postLoginUser(this.form)
 					.catch(err => {
 						console.error(err);
 					});
 				}
 			});
 		},
-		...mapActions(["logInUserAccount"])
+		...mapActions(["postLoginUser"])
 	}
 };
 </script>

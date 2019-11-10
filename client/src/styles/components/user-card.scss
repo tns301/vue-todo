@@ -19,6 +19,19 @@ $--name-email-height: 22px;
 .full {
 	width: 100%;
 }
+.list {
+	padding-inline-start: 0;
+
+	li {
+		transition: background-color .3s,color .3s;
+		max-width: 310px;
+		list-style: none;
+	}
+	li:hover {
+		background-color: $--bg-hover;
+		cursor: pointer;
+	}
+}
 .name {
 	display: inline-block;
 	width: 74%;

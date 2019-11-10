@@ -12,7 +12,7 @@
 				<div class="col-lg-3 mt-2">
 					<el-select v-model="form.type" class="el-form-item" clearable placeholder="Type">
 						<el-option
-							v-for="(item, key) in listTypes"
+							v-for="(item, key) in returnAllListTypes"
 							:key="key"
 							:label="`${item.icon} ${item.label}`"
 							:value="key"
@@ -66,7 +66,7 @@
 <script>
 import { goToPath } from "../common/router-navigation";
 import { listTypes } from "../common/list-type";
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
 	name: "ViewList",
@@ -74,9 +74,9 @@ export default {
 	data() {
 		return {
 			form: {
-				name: "",
-				type: "",
-				date: "",
+				name: null,
+				type: null,
+				date: null,
 				items: {
 					// Maybe when a new user is created, also create the List Database?
 				}
@@ -105,18 +105,23 @@ export default {
 		submitForm(formName) {
 			this.$refs[formName].validate(valid => {
 				if (valid) {
-					this.addListData({
+					this.putListData({
 						id: this.getUniqueId('list'),
 						data:this.form
 					})
-					.then(() => {})
+					.then(() => {
+						this.getListData();
+					})
 					.catch(err => {
 						console.error(err);
 					});
 				}
 			});
 		},
-		...mapActions(["addListData"])
+		...mapActions(["putListData", "getListData"])
+	},
+	computed: {
+		...mapGetters(["returnAllListTypes"])
 	}
 };
 </script>

@@ -20,23 +20,23 @@
 					</el-form-item>
 				</div>
 				<div class="col-6">
-					<el-form-item prop="passwordRegisterFirst">
+					<el-form-item prop="password">
 						<el-input
 							placeholder="Password"
 							type="password"
 							autocomplete="off"
-							v-model="form.passwordRegisterFirst"
+							v-model="form.password"
 							prefix-icon="el-icon-lock"
 						/>
 					</el-form-item>
 				</div>
 				<div class="col-6">
-					<el-form-item prop="passwordRegisterSecond">
+					<el-form-item prop="passwordConfirm">
 						<el-input
 							placeholder="Confirm password"
 							type="password"
 							autocomplete="off"
-							v-model="form.passwordRegisterSecond"
+							v-model="form.passwordConfirm"
 							prefix-icon="el-icon-lock"
 						/>
 					</el-form-item>
@@ -48,7 +48,7 @@
 					<el-form-item>
 						<el-radio
 							v-model="form.avatar"
-							v-for="(eachAvatar, key) in logo"
+							v-for="(eachAvatar, key) in returnAllIcons"
 							:key="eachAvatar"
 							:label="key"
 						>
@@ -72,11 +72,10 @@ import { mapGetters, mapActions } from "vuex";
 import { rules } from "../common/rules";
 import { validation } from "../common/validation";
 import { goToPath } from "../common/router-navigation";
-import { avatar } from "../common/user-avatar";
 
 export default {
 	name: "EditAccount",
-	mixins: [rules, validation, goToPath, avatar],
+	mixins: [rules, validation, goToPath],
 	data() {
 		return {
 			form: {
@@ -84,8 +83,8 @@ export default {
 				lastName: "",
 				email: "",
 				avatar: "",
-				passwordRegisterFirst: "",
-				passwordRegisterSecond: ""
+				password: "",
+				passwordConfirm: ""
 			}
 		};
 	},
@@ -93,27 +92,20 @@ export default {
 		submitForm(formName) {
 			this.$refs[formName].validate(valid => {
 				if (valid) {
-					this.editUserAccount({
-						firstName: this.form.firstName,
-						lastName: this.form.lastName,
-						email: this.form.email,
-						password: this.form.passwordRegisterFirst,
-						passwordConfirm: this.form.passwordRegisterSecond,
-						avatar: this.form.avatar
+					this.putEditUser(this.form)
+					.then(() => {
+						this.getUserInfo();
 					})
-						.then(() => {
-							this.getUserInfo();
-						})
-						.catch(err => {
-							console.error(err);
-						});
+					.catch(err => {
+						console.error(err);
+					});
 				}
 			});
 		},
-		...mapActions(["editUserAccount", "getUserInfo"])
+		...mapActions(["putEditUser", "getUserInfo"])
 	},
 	computed: {
-		...mapGetters(["returnUserInfo"])
+		...mapGetters(["returnUserInfo", "returnAllIcons"])
 	},
 	watch: {
 		returnUserInfo: {

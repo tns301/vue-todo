@@ -3,6 +3,8 @@ import Vuex from "vuex";
 import TokenService from "../service/token";
 import ApiService from "../service/api";
 import router from "../router/router";
+import { avatar } from "../components/common/user-avatar";
+import { listTypes } from "../components/common/list-type";
 
 Vue.use(Vuex)
 
@@ -12,8 +14,10 @@ export default new Vuex.Store({
 			firstName: "First",
 			lastName: "Last",
 			email: "",
-			avatar: "0"
+			avatar: ""
 		},
+		avatar: avatar,
+		listTypes: listTypes,
 		listData: null
 	},
 	mutations: {
@@ -25,7 +29,7 @@ export default new Vuex.Store({
 		}
 	},
 	actions: {
-		registerUserAccount(context, payload) {
+		postRegisterUser(context, payload) {
 			return new Promise((resolve, reject) => {
 				ApiService.post("/api/register", payload)
 					.then(() => {
@@ -37,7 +41,7 @@ export default new Vuex.Store({
 					})
 			});
 		},
-		editUserAccount(context, payload) {
+		putEditUser(context, payload) {
 			return new Promise((resolve, reject) => {
 				ApiService.put("/api/user/edit", payload)
 					.then(() => {
@@ -49,7 +53,7 @@ export default new Vuex.Store({
 					})
 			});
 		},
-		logInUserAccount(context, payload) {
+		postLoginUser(context, payload) {
 			return new Promise((resolve, reject) => {
 				ApiService.post("/api/login", payload)
 					.then((response) => {
@@ -77,10 +81,10 @@ export default new Vuex.Store({
 		logOutUser() {
 			TokenService.removeToken()
 			ApiService.removeHeader()
-			
+
 			router.push({ path: "/login" })
 		},
-		addListData(context, payload) {
+		putListData(context, payload) {
 			return new Promise((resolve, reject) => {
 				ApiService.put("/api/todo/put", payload)
 					.then(() => {
@@ -109,13 +113,48 @@ export default new Vuex.Store({
 		returnUserInfo(state) {
 			return state.userInfo
 		},
-		returnListNames(state) {
-			if (state.listData === null) return {}
+		returnUserInfoMenu(state, getters) {
+			const tempData = state.userInfo
+			
+			return {
+				avatarSrc: getters.returnIcon(tempData.avatar),
+				fullName: `${tempData.firstName} ${tempData.lastName}`
+			}
+		},
+		returnListNamesMenu(state, getters) {
+			if (state.listData === null) return
+			
+			let obj = {}
 
-			return Object.keys(state.listData)
+			for (const eachList in state.listData) {
+				Object.assign(obj, {
+					[eachList]: {
+						name: state.listData[eachList].name,
+						typeSrc: getters.returnListType(state.listData[eachList].type)
+					}
+				})
+			}
+
+			return obj
 		},
 		returnListData(state) {
-			return state.lists
+			if (state.listData === null) return
+
+			return state.listData
+		},
+		returnAllIcons(state) {
+			return state.avatar
+		},
+		returnIcon: state => avatarId => {
+			return state.avatar[avatarId]
+		},
+		returnAllListTypes(state) {
+			return state.listTypes
+		},
+		returnListType: state => typeId => {
+			if (!state.listTypes[typeId]) return
+
+			return state.listTypes[typeId].icon
 		}
 	},
 })
