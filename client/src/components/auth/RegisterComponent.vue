@@ -26,23 +26,23 @@
 						</el-form-item>
 					</div>
 					<div class="col-6">
-						<el-form-item prop="passwordRegisterFirst">
+						<el-form-item prop="password">
 							<el-input
 								placeholder="Password"
 								type="password"
 								autocomplete="off"
-								v-model="form.passwordRegisterFirst"
+								v-model="form.password"
 								prefix-icon="el-icon-lock"
 							/>
 						</el-form-item>
 					</div>
 					<div class="col-6">
-						<el-form-item prop="passwordRegisterSecond">
+						<el-form-item prop="passwordConfirm">
 							<el-input
 								placeholder="Confirm password"
 								type="password"
 								autocomplete="off"
-								v-model="form.passwordRegisterSecond"
+								v-model="form.passwordConfirm"
 								prefix-icon="el-icon-lock"
 							/>
 						</el-form-item>
@@ -75,8 +75,8 @@ export default {
 				firstName: "",
 				lastName: "",
 				email: "",
-				passwordRegisterFirst: "",
-				passwordRegisterSecond: ""
+				password: "",
+				passwordConfirm: ""
 			}
 		};
 	},
@@ -84,13 +84,8 @@ export default {
 		submitForm(formName) {
 			this.$refs[formName].validate(valid => {
 				if (valid) {
-					this.registerUserAccount({
-						firstName: this.form.firstName,
-						lastName: this.form.lastName,
-						email: this.form.email,
-						password: this.form.passwordRegisterFirst,
-						passwordConfirm: this.form.passwordRegisterSecond
-					}).catch(err => {
+					this.registerUserAccount(this.form)
+					.catch(err => {
 						console.error(err);
 					});
 				}

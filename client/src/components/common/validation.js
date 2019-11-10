@@ -1,7 +1,7 @@
 export const validation = {
 	methods: {
 		checkMatchPassword(rule, value, callback) {
-			if (value !== this.form.passwordRegisterFirst) {
+			if (value !== this.form.password) {
 				callback(new Error("Oi! Password does not match"));
 			}
 			

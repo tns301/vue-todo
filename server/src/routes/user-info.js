@@ -9,14 +9,18 @@ router.get("/get", checkToken, async (req, res) => {
 	const currentUserId = res.locals.id;
 	const currentUserData = await User.findOne({ _id: currentUserId });
 
-	const userData = {
-		firstName: currentUserData.firstName,
-		lastName: currentUserData.lastName,
-		email: currentUserData.email,
-		avatar: currentUserData.avatar
+	try {
+		const userData = {
+			firstName: currentUserData.firstName,
+			lastName: currentUserData.lastName,
+			email: currentUserData.email,
+			avatar: currentUserData.avatar
+		}
+	
+		res.send({ status: 'success', response: userData })
+	} catch(err) {
+		res.status(400).send({ status: "error", message: "failed to get data" })
 	}
-
-	res.send({ status: 'success', response: userData })
 })
 
 router.put("/edit", checkToken, async (req, res) => {

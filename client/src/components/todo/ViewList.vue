@@ -55,7 +55,7 @@
 		</el-form>
 		<div class="row">
 			<div class="col-12">
-				<el-button type="primary" class="float-right">Save List</el-button>
+				<el-button type="primary" class="float-right" @click="submitForm('form')">Save List</el-button>
 				<el-button type="success" icon="el-icon-plus" @click="pushItems">Add a Task</el-button>
 			</div>
 		</div>
@@ -66,6 +66,7 @@
 <script>
 import { goToPath } from "../common/router-navigation";
 import { listTypes } from "../common/list-type";
+import { mapActions } from 'vuex';
 
 export default {
 	name: "ViewList",
@@ -87,7 +88,7 @@ export default {
 	},
 	methods: {
 		pushItems() {
-			this.$set(this.form.items, this.getUniqueId("item"), {
+			this.$set(this.form.items, this.getUniqueId("task"), {
 				done: false,
 				text: ""
 			});
@@ -100,7 +101,22 @@ export default {
 		},
 		getUniqueId(value) {
 			return `${value}-${~~Date.now()}`;
-		}
+		},
+		submitForm(formName) {
+			this.$refs[formName].validate(valid => {
+				if (valid) {
+					this.addListData({
+						id: this.getUniqueId('list'),
+						data:this.form
+					})
+					.then(() => {})
+					.catch(err => {
+						console.error(err);
+					});
+				}
+			});
+		},
+		...mapActions(["addListData"])
 	}
 };
 </script>

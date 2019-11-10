@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import TokenService from "../service/token";
 import ApiService from "../service/api";
-import router from '../router/router'
+import router from "../router/router";
 
 Vue.use(Vuex)
 
@@ -14,18 +14,22 @@ export default new Vuex.Store({
 			email: "",
 			avatar: "0"
 		},
+		listData: null
 	},
 	mutations: {
 		setUserInfo(state, paylaod) {
-			state.userInfo = paylaod;
+			state.userInfo = paylaod
+		},
+		setListData(state, payload) {
+			state.listData = payload
 		}
 	},
 	actions: {
 		registerUserAccount(context, payload) {
 			return new Promise((resolve, reject) => {
-				ApiService.post('/api/register', payload)
+				ApiService.post("/api/register", payload)
 					.then(() => {
-						router.push({ path: '/login' })
+						router.push({ path: "/login" })
 						resolve()
 					})
 					.catch((error) => {
@@ -35,9 +39,9 @@ export default new Vuex.Store({
 		},
 		editUserAccount(context, payload) {
 			return new Promise((resolve, reject) => {
-				ApiService.put('/api/user/edit', payload)
+				ApiService.put("/api/user/edit", payload)
 					.then(() => {
-						router.push({ path: '/' })
+						router.push({ path: "/" })
 						resolve()
 					})
 					.catch((error) => {
@@ -47,26 +51,26 @@ export default new Vuex.Store({
 		},
 		logInUserAccount(context, payload) {
 			return new Promise((resolve, reject) => {
-				ApiService.post('/api/login', payload)
+				ApiService.post("/api/login", payload)
 					.then((response) => {
-						TokenService.saveToken(response.headers['auth-token'])
-						router.push({ path: '/home' })
+						TokenService.saveToken(response.headers["auth-token"])
+						router.push({ path: "/home" })
 						resolve()
 					})
 					.catch((error) => {
-						reject(error);
+						reject(error)
 					})
 			});
 		},
 		getUserInfo(context, payload) {
 			return new Promise((resolve, reject) => {
-				ApiService.get('/api/user/get', payload)
+				ApiService.get("/api/user/get", payload)
 					.then((response) => {
-						context.commit('setUserInfo', response.data.response)
-						resolve(response.data)
+						context.commit("setUserInfo", response.data.response)
+						resolve()
 					})
 					.catch((error) => {
-						reject(error);
+						reject(error)
 					})
 			});
 		},
@@ -74,12 +78,44 @@ export default new Vuex.Store({
 			TokenService.removeToken()
 			ApiService.removeHeader()
 			
-			router.push({ path: '/login' })
+			router.push({ path: "/login" })
+		},
+		addListData(context, payload) {
+			return new Promise((resolve, reject) => {
+				ApiService.put("/api/todo/put", payload)
+					.then(() => {
+						router.push({ path: "/home" })
+						resolve()
+					})
+					.catch((error) => {
+						reject(error)
+					})
+			});
+		},
+		getListData(context, payload) {
+			return new Promise((resolve, reject) => {
+				ApiService.get("/api/todo/get", payload)
+					.then((response) => {
+						context.commit("setListData", response.data.response)
+						resolve()
+					})
+					.catch((error) => {
+						reject(error)
+					})
+			});
 		},
 	},
 	getters: {
 		returnUserInfo(state) {
 			return state.userInfo
+		},
+		returnListNames(state) {
+			if (state.listData === null) return {}
+
+			return Object.keys(state.listData)
+		},
+		returnListData(state) {
+			return state.lists
 		}
 	},
 })

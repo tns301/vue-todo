@@ -19,6 +19,9 @@
 			</el-submenu>
 		</el-menu>
 		<el-divider></el-divider>
+		<ul>
+			<li v-for="list in returnListNames" :key="list">{{list}}</li>
+		</ul>
 		<el-button type="success" class="full" @click="goToPath('/home/list-add')">
 			<i class="el-icon-plus"></i> Add List
 		</el-button>
@@ -35,6 +38,7 @@ export default {
 	mixins: [goToPath, avatar],
 	created() {
 		this.getUserInfo();
+		this.getListData();
 	},
 	methods: {
 		signOut() {
@@ -48,10 +52,10 @@ export default {
 				})
 				.catch(() => {});
 		},
-		...mapActions(["getUserInfo", "logOutUser"])
+		...mapActions(["getUserInfo", "logOutUser", "getListData"])
 	},
 	computed: {
-		...mapGetters(["returnUserInfo"])
+		...mapGetters(["returnUserInfo", "returnListNames"])
 	}
 };
 </script>

@@ -12,7 +12,7 @@
 				<el-form-item prop="email">
 					<el-input placeholder="Email" v-model="form.email" prefix-icon="el-icon-message" />
 				</el-form-item>
-				<el-form-item prop="password">
+				<el-form-item>
 					<el-input
 						placeholder="Password"
 						type="password"
@@ -57,10 +57,8 @@ export default {
 		submitForm(formName) {
 			this.$refs[formName].validate(valid => {
 				if (valid) {
-					this.logInUserAccount({
-						email: this.form.email,
-						password: this.form.password
-					}).catch(err => {
+					this.logInUserAccount(this.form)
+					.catch(err => {
 						console.error(err);
 					});
 				}

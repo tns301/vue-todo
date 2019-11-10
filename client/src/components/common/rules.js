@@ -14,13 +14,6 @@ export const rules = {
 						trigger: "blur"
 					}
 				],
-				password: [
-					{
-						required: true,
-						message: "Please input the password",
-						trigger: "blur"
-					}
-				],
 				firstName: [
 					{
 						required: true,
@@ -35,7 +28,7 @@ export const rules = {
 						trigger: "blur",
 					}
 				],
-				passwordRegisterFirst: [
+				password: [
 					{
 						required: true,
 						message: "Please input the password",
@@ -51,7 +44,7 @@ export const rules = {
 						trigger: "blur",
 					}
 				],
-				passwordRegisterSecond: [
+				passwordConfirm: [
 					{
 						required: true,
 						message: "Please input the password",

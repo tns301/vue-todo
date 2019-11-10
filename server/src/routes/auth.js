@@ -3,13 +3,15 @@ const bycrpt = require("bcryptjs");
 const { validateRegister } = require("../model/user/validation");
 const jwt = require('jsonwebtoken');
 const User = require("../model/user/user");
+const List = require("../model/list/list");
+const listExample = require("../model/list/list-example")
 
 router.post("/register", async (req, res) => {
 	if (req.body.password !== req.body.passwordConfirm) return res.status(400).send({ status: "error", message: 'password does not match' })
-	
+
 	const { error } = await validateRegister(req.body);
 	if (error) return res.status(400).send({ status: "error", message: error.details[0].message })
-	
+
 	const emailExist = await User.findOne({ email: req.body.email });
 	if (emailExist) return res.status(400).send({ status: "error", message: 'email is already in use, please choose another email' })
 
@@ -25,8 +27,16 @@ router.post("/register", async (req, res) => {
 	});
 
 	try {
-		await USER.save();
-		
+		await USER.save(); // Generate User
+
+		const user = await User.findOne({ email: req.body.email });
+		const LIST = new List({
+			user_id: user._id,
+			lists: listExample
+		});
+
+		await LIST.save(); // Generate List
+
 		res.send({ status: "success", message: 'account created' });
 	} catch (err) {
 		res.status(400).send({ status: "error", message: err })

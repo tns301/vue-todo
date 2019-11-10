@@ -9,6 +9,7 @@ const port = process.env.PORT_SERVER;
 // Routes
 const authRoute = require("./routes/auth");
 const userInfo = require("./routes/user-info");
+const todoList = require("./routes/todo-list");
 
 console.log("\n");
 console.log(`Config: Loaded`);
@@ -25,6 +26,7 @@ app.use(express.json());
 // Routes use
 app.use("/api/", authRoute);
 app.use("/api/user/", userInfo);
+app.use("/api/todo/", todoList);
 
 // Server start
 app.listen(port, () => { console.log("Server: Up") });
