@@ -17,7 +17,7 @@
 import ApiService from "../../service/api";
 
 // Components
-import UserCard from "../user/UserCard";
+import UserCard from "../user/UserCard.vue";
 
 export default {
 	name: "HomeMain",

@@ -4,7 +4,7 @@ import TokenService from "../service/token";
 import ApiService from "../service/api"
 
 // Components
-import LoginComponent from "../components/auth/LoginComponent";
+import LoginComponent from "../components/auth/LoginComponent.vue";
 
 Vue.use(VueRouter)
 
@@ -26,26 +26,26 @@ const router = new VueRouter({
 				next();
 			},
 			path: '/register',
-			component: () => import("../components/auth/RegisterComponent"),
+			component: () => import("../components/auth/RegisterComponent.vue"),
 			meta: {
 				public: true
 			},
 		},
 		{
 			path: '/home',
-			component: () => import("../components/home/HomeMain"),
+			component: () => import("../components/home/HomeMain.vue"),
 			children: [
 				{
 					path: '',
-					component: () => import("../components/todo/DashboardList"),
+					component: () => import("../components/todo/DashboardList.vue"),
 				},
 				{
 					path: 'edit-account',
-					component: () => import("../components/edit-account/EditAccount"),
+					component: () => import("../components/edit-account/EditAccount.vue"),
 				},
 				{
 					path: 'list-:type',
-					component: () => import("../components/todo/ViewList"),
+					component: () => import("../components/todo/ViewList.vue"),
 				},
 			]
 		},

@@ -77,9 +77,7 @@ export default {
 				name: null,
 				type: null,
 				date: null,
-				items: {
-					// Maybe when a new user is created, also create the List Database?
-				}
+				items: { }
 			},
 			labels: {
 				header: "Add list"

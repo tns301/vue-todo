@@ -1,6 +1,6 @@
 <template>
 	<el-card>
-		<div>Todo</div>
+		<div>Dashboard</div>
 	</el-card>
 </template>
 
