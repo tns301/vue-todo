@@ -1,7 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import TokenService from "../service/token";
-import ApiService from "../service/api"
+import ApiService from "../service/api";
+import store from "../store/store"
 
 // Components
 import LoginComponent from "../components/auth/LoginComponent.vue";
@@ -46,6 +47,18 @@ const router = new VueRouter({
 				{
 					path: 'list-:type',
 					component: () => import("../components/todo/ViewList.vue"),
+				},
+				{
+					beforeEnter: (to, from, next) => {
+						if(!store.getters.returnListDataState) { // redirect to home in case the path is accessed from history and the data is not yet loaded.
+							next({
+								path: '/home',
+							});
+						}
+						next();
+					},
+					path: 'list-:type/:id',
+					component: () => import("../components/todo/ViewList.vue")
 				},
 			]
 		},

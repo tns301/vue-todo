@@ -20,7 +20,7 @@
 		</el-menu>
 		<el-divider></el-divider>
 		<ul class="list mb-4">
-			<li class="p-2 mb-1" v-for="(list, key) in returnListNamesMenu" :key="key">{{list.typeSrc}} {{list.name}}</li>
+			<li class="p-2 mb-1" v-for="(list, key) in returnListNamesMenu" :key="key" @click="goToPath(`/home/list-edit/${key}`)">{{list.typeSrc}} {{list.name}}</li>
 		</ul>
 		<el-divider></el-divider>
 		<el-button type="success" class="full" @click="goToPath('/home/list-add')">

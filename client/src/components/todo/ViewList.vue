@@ -1,6 +1,6 @@
 <template>
 	<el-card>
-		<el-page-header @back="goToPath('/')" :content="labels.header"></el-page-header>
+		<el-page-header @back="goToPath('/')" :content="labels[type].header"></el-page-header>
 		<el-form ref="form" :model="form">
 			<p>List Info</p>
 			<div class="row">
@@ -55,7 +55,7 @@
 		</el-form>
 		<div class="row">
 			<div class="col-12">
-				<el-button type="primary" class="float-right" @click="submitForm('form')">Save List</el-button>
+				<el-button type="primary" class="float-right" @click="submitForm('form')">{{ labels[type].button }}</el-button>
 				<el-button type="success" icon="el-icon-plus" @click="pushItems">Add a Task</el-button>
 			</div>
 		</div>
@@ -73,6 +73,7 @@ export default {
 	mixins: [goToPath, listTypes],
 	data() {
 		return {
+			type: 'add',
 			form: {
 				name: null,
 				type: null,
@@ -80,9 +81,23 @@ export default {
 				items: { }
 			},
 			labels: {
-				header: "Add list"
+				add: {
+					header: "Add list",
+					button: "Save"
+				},
+				edit: {
+					header: "Edit list",
+					button: "Update"
+				}
 			}
 		};
+	},
+	created() {
+		this.type = this.$route.params.type
+
+		if (this.type === 'edit') {
+			this.form = JSON.parse(JSON.stringify(this.returnList(this.$route.params.id))) // get rid of getters and setters
+		}
 	},
 	methods: {
 		pushItems() {
@@ -104,8 +119,8 @@ export default {
 			this.$refs[formName].validate(valid => {
 				if (valid) {
 					this.putListData({
-						id: this.getUniqueId('list'),
-						data:this.form
+						id: this.$route.params.id || this.getUniqueId('list'),
+						data: this.form
 					})
 					.then(() => {
 						this.getListData();
@@ -119,7 +134,7 @@ export default {
 		...mapActions(["putListData", "getListData"])
 	},
 	computed: {
-		...mapGetters(["returnAllListTypes"])
+		...mapGetters(["returnAllListTypes", "returnList"])
 	}
 };
 </script>

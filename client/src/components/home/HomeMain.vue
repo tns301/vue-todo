@@ -6,7 +6,7 @@
 			</div>
 			<div class="col align-app">
 				<transition name="el-zoom-in-center" mode="out-in">
-					<router-view></router-view>
+					<router-view :key="$route.path"></router-view>
 				</transition>
 			</div>
 		</div>

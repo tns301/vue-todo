@@ -142,6 +142,12 @@ export default new Vuex.Store({
 
 			return state.listData
 		},
+		returnListDataState(state) {
+			return state.listData !== null
+		},
+		returnList: state => listId => {
+			return state.listData[listId]
+		},
 		returnAllIcons(state) {
 			return state.avatar
 		},
