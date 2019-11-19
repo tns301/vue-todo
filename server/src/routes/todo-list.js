@@ -9,7 +9,7 @@ router.get("/get", checkToken, async (req, res) => {
 		const currentListData = await List.findOne({ user_id: currentUserId });
 
 		res.send({ status: 'success', response: currentListData.lists })
-	} catch(err) {
+	} catch (err) {
 		res.status(400).send({ status: "error", message: 'failed to get data' })
 	}
 })
@@ -19,14 +19,28 @@ router.put("/put", checkToken, async (req, res) => {
 
 	try {
 		await List.updateOne({ user_id: currentUserId }, {
-			$set: {
-				[`lists.${req.body.id}`]: req.body.data
-			}
+			$push: { lists: req.body }
 		});
 
 		res.send({ status: 'success', message: 'list created' })
-	} catch(err) {
+	} catch (err) {
 		res.status(400).send({ status: "error", message: 'failed to create the list' })
+	}
+})
+
+router.delete("/delete", checkToken, async (req, res) => {
+	const currentUserId = res.locals.id;
+
+	try {
+		await List.updateOne({ user_id: currentUserId }, {
+			$pull: {
+				lists: { _id: req.body.id }
+			}
+		});
+
+		res.send({ status: 'success', message: 'list deleted' })
+	} catch (err) {
+		res.status(400).send({ status: "error", message: 'failed to delete the list' })
 	}
 })
 

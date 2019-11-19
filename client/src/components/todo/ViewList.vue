@@ -55,7 +55,11 @@
 		</el-form>
 		<div class="row">
 			<div class="col-12">
-				<el-button type="primary" class="float-right" @click="submitForm('form')">{{ labels[type].button }}</el-button>
+				<el-button
+					type="primary"
+					class="float-right"
+					@click="submitForm('form')"
+				>{{ labels[type].button }}</el-button>
 				<el-button type="success" icon="el-icon-plus" @click="pushItems">Add a Task</el-button>
 			</div>
 		</div>
@@ -66,19 +70,19 @@
 <script>
 import { goToPath } from "../common/router-navigation";
 import { listTypes } from "../common/list-type";
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from "vuex";
 
 export default {
 	name: "ViewList",
 	mixins: [goToPath, listTypes],
 	data() {
 		return {
-			type: 'add',
+			type: "add",
 			form: {
 				name: null,
 				type: null,
 				date: null,
-				items: { }
+				items: {}
 			},
 			labels: {
 				add: {
@@ -93,10 +97,12 @@ export default {
 		};
 	},
 	created() {
-		this.type = this.$route.params.type
+		this.type = this.$route.params.type;
 
-		if (this.type === 'edit') {
-			this.form = JSON.parse(JSON.stringify(this.returnList(this.$route.params.id))) // get rid of getters and setters
+		if (this.type === "edit") {
+			this.form = JSON.parse(
+				JSON.stringify(this.returnList(this.$route.params.id))
+			); // get rid of getters and setters
 		}
 	},
 	methods: {
@@ -118,16 +124,19 @@ export default {
 		submitForm(formName) {
 			this.$refs[formName].validate(valid => {
 				if (valid) {
-					this.putListData({
-						id: this.$route.params.id || this.getUniqueId('list'),
-						data: this.form
-					})
-					.then(() => {
-						this.getListData();
-					})
-					.catch(err => {
-						console.error(err);
+					let data = this.form;
+
+					Object.assign(data, {
+						_id: this.$route.params.id || this.getUniqueId("list")
 					});
+
+					this.putListData(data)
+						.then(() => {
+							this.getListData();
+						})
+						.catch(err => {
+							console.error(err);
+						});
 				}
 			});
 		},

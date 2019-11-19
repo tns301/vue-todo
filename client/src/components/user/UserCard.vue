@@ -20,7 +20,21 @@
 		</el-menu>
 		<el-divider></el-divider>
 		<ul class="list mb-4">
-			<li class="p-2 mb-1" v-for="(list, key) in returnListNamesMenu" :key="key" @click="goToPath(`/home/list-edit/${key}`)">{{list.typeSrc}} {{list.name}}</li>
+			<li
+				class="p-2 mb-1"
+				v-for="(list, key) in returnListNamesMenu"
+				:key="key"
+				@click="goToPath(`/home/list-edit/${key}`)"
+			>
+				{{list.typeSrc}} {{list.name}}
+				<el-button
+					type="danger"
+					icon="el-icon-delete"
+					class="delete-button"
+					circle
+					@click="deleteList(key)"
+				></el-button>
+			</li>
 		</ul>
 		<el-divider></el-divider>
 		<el-button type="success" class="full" @click="goToPath('/home/list-add')">
@@ -48,11 +62,23 @@ export default {
 				type: "warning"
 			})
 			.then(() => {
-				this.logOutUser();
+				this.logOutUser()
 			})
-			.catch(() => {});
+			.catch(() => {})
 		},
-		...mapActions(["getUserInfo", "logOutUser", "getListData"])
+		deleteList(id) {
+			this.deleteListData({
+				id: id
+			}).then(() => {
+				this.getListData()
+			});
+		},
+		...mapActions([
+			"getUserInfo",
+			"logOutUser",
+			"getListData",
+			"deleteListData",
+		])
 	},
 	computed: {
 		...mapGetters(["returnUserInfoMenu", "returnListNamesMenu"])

@@ -108,6 +108,17 @@ export default new Vuex.Store({
 					})
 			});
 		},
+		deleteListData(context, payload) {
+			return new Promise((resolve, reject) => {
+				ApiService.delete("/api/todo/delete", payload)
+					.then(() => {
+						resolve()
+					})
+					.catch((error) => {
+						reject(error)
+					})
+			});
+		},
 	},
 	getters: {
 		returnUserInfo(state) {
@@ -126,11 +137,13 @@ export default new Vuex.Store({
 			
 			let obj = {}
 
-			for (const eachList in state.listData) {
+			for (const eachListIndex in state.listData) {
+				let eachList = state.listData[eachListIndex]
+
 				Object.assign(obj, {
-					[eachList]: {
-						name: state.listData[eachList].name,
-						typeSrc: getters.returnListType(state.listData[eachList].type)
+					[eachList._id]: {
+						name: eachList.name,
+						typeSrc: getters.returnListType(eachList.type)
 					}
 				})
 			}
@@ -145,8 +158,19 @@ export default new Vuex.Store({
 		returnListDataState(state) {
 			return state.listData !== null
 		},
-		returnList: state => listId => {
-			return state.listData[listId]
+		returnList: state => listName => {
+			let index = 0, currentListName;
+
+			for (const listIndex in state.listData) {
+				currentListName = state.listData[listIndex]._id
+				
+				if (currentListName === listName) {
+					index = listIndex
+					break
+				}
+			}
+			
+			return state.listData[index]
 		},
 		returnAllIcons(state) {
 			return state.avatar

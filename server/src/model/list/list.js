@@ -6,7 +6,7 @@ const listSchema = new mongoose.Schema({
 		required: true
 	},
 	lists: {
-		type: Object
+		type: Array
 	},
 });
 

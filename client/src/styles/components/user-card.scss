@@ -46,6 +46,16 @@ $--name-email-height: 22px;
 	padding-left: 15px;
 }
 
+li:hover > .delete-button {
+	opacity: 1;
+}
+
+.delete-button {
+	opacity: 0;
+	padding: 3px !important;
+	float: right;
+}
+
 @media only screen and (max-width:767px){
 	.user-menu {
 		width: 100%;
