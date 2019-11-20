@@ -96,6 +96,17 @@ export default new Vuex.Store({
 					})
 			});
 		},
+		updateListData(context, payload) {
+			return new Promise((resolve, reject) => {
+				ApiService.put("/api/todo/update", payload)
+					.then(() => {
+						resolve()
+					})
+					.catch((error) => {
+						reject(error)
+					})
+			});
+		},
 		getListData(context, payload) {
 			return new Promise((resolve, reject) => {
 				ApiService.get("/api/todo/get", payload)
@@ -126,7 +137,7 @@ export default new Vuex.Store({
 		},
 		returnUserInfoMenu(state, getters) {
 			const tempData = state.userInfo
-			
+
 			return {
 				avatarSrc: getters.returnIcon(tempData.avatar),
 				fullName: `${tempData.firstName} ${tempData.lastName}`
@@ -134,7 +145,7 @@ export default new Vuex.Store({
 		},
 		returnListNamesMenu(state, getters) {
 			if (state.listData === null) return
-			
+
 			let obj = {}
 
 			for (const eachListIndex in state.listData) {
@@ -143,7 +154,7 @@ export default new Vuex.Store({
 				Object.assign(obj, {
 					[eachList._id]: {
 						name: eachList.name,
-						typeSrc: getters.returnListType(eachList.type)
+						typeSrc: getters.returnListType(eachList.type),
 					}
 				})
 			}
@@ -163,14 +174,60 @@ export default new Vuex.Store({
 
 			for (const listIndex in state.listData) {
 				currentListName = state.listData[listIndex]._id
-				
+
 				if (currentListName === listName) {
 					index = listIndex
 					break
 				}
 			}
-			
+
 			return state.listData[index]
+		},
+		returnTodayList(state, getters) {
+			if (state.listData === null) return
+
+			let date = new Date();
+
+			let obj = [], filteredArray = state.listData.filter(list => {
+				if (new Date(list.date) > date.setDate(date.getDate() - 1)) {
+					return list
+				}
+			})
+
+			for (const eachListIndex in filteredArray) {
+				let eachList = filteredArray[eachListIndex]
+
+				obj.push({
+					name: `${getters.returnListType(eachList.type)} ${eachList.name}`,
+					date: eachList.date,
+					_id: eachList._id
+				})
+			}
+
+			return obj
+		},
+		returnOverdueList(state, getters) {
+			if (state.listData === null) return
+
+			let date = new Date();
+
+			let obj = [], filteredArray = state.listData.filter(list => {
+				if (new Date(list.date) < date.setDate(date.getDate() - 1)) {
+					return list
+				}
+			})
+
+			for (const eachListIndex in filteredArray) {
+				let eachList = filteredArray[eachListIndex]
+
+				obj.push({
+					name: `${getters.returnListType(eachList.type)} ${eachList.name}`,
+					date: eachList.date,
+					_id: eachList._id
+				})
+			}
+
+			return obj
 		},
 		returnAllIcons(state) {
 			return state.avatar

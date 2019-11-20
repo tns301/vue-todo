@@ -130,17 +130,27 @@ export default {
 						_id: this.$route.params.id || this.getUniqueId("list")
 					});
 
-					this.putListData(data)
+					if (this.type === "add") {
+						this.putListData(data)
 						.then(() => {
 							this.getListData();
 						})
 						.catch(err => {
 							console.error(err);
 						});
+					} else {
+						this.updateListData(data)
+						.then(() => {
+							this.getListData();
+						})
+						.catch(err => {
+							console.error(err);
+						});
+					}
 				}
 			});
 		},
-		...mapActions(["putListData", "getListData"])
+		...mapActions(["putListData", "getListData", "updateListData"])
 	},
 	computed: {
 		...mapGetters(["returnAllListTypes", "returnList"])

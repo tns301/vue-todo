@@ -28,6 +28,31 @@ router.put("/put", checkToken, async (req, res) => {
 	}
 })
 
+router.put("/update", checkToken, async (req, res) => {
+	const currentUserId = res.locals.id;
+
+	try {
+		await List.updateOne({ user_id: currentUserId }, {
+			$pull: {
+				lists: { _id: req.body._id }
+			},
+		});
+
+	} catch (err) {
+		res.status(400).send({ status: "error", message: 'failed to update the list' })
+	}
+	try {
+		await List.updateOne({ user_id: currentUserId }, {
+			$push: { lists: req.body }
+		});
+
+	} catch (err) {
+		res.status(400).send({ status: "error", message: 'failed to update the list' })
+	}
+
+	res.send({ status: 'success', message: 'list updated' })
+})
+
 router.delete("/delete", checkToken, async (req, res) => {
 	const currentUserId = res.locals.id;
 

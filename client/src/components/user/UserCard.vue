@@ -20,21 +20,24 @@
 		</el-menu>
 		<el-divider></el-divider>
 		<ul class="list mb-4">
-			<li
-				class="p-2 mb-1"
-				v-for="(list, key) in returnListNamesMenu"
-				:key="key"
-				@click="goToPath(`/home/list-edit/${key}`)"
-			>
-				{{list.typeSrc}} {{list.name}}
-				<el-button
-					type="danger"
-					icon="el-icon-delete"
-					class="delete-button"
-					circle
-					@click="deleteList(key)"
-				></el-button>
-			</li>
+			<transition-group name="bounce-li">
+				<li
+					class="p-2 mb-1"
+					v-for="(list, key, index) in returnListNamesMenu"
+					:key="key"
+					:index="index"
+					@click="goToPath(`/home/list-edit/${key}`)"
+				>
+					{{list.typeSrc}} {{list.name}}
+					<el-button
+						type="danger"
+						icon="el-icon-delete"
+						class="delete-button"
+						circle
+						@click="deleteList(key)"
+					></el-button>
+				</li>
+			</transition-group>
 		</ul>
 		<el-divider></el-divider>
 		<el-button type="success" class="full" @click="goToPath('/home/list-add')">
@@ -61,23 +64,23 @@ export default {
 				cancelButtonText: "Cancel",
 				type: "warning"
 			})
-			.then(() => {
-				this.logOutUser()
-			})
-			.catch(() => {})
+				.then(() => {
+					this.logOutUser();
+				})
+				.catch(() => {});
 		},
 		deleteList(id) {
 			this.deleteListData({
 				id: id
 			}).then(() => {
-				this.getListData()
+				this.getListData();
 			});
 		},
 		...mapActions([
 			"getUserInfo",
 			"logOutUser",
 			"getListData",
-			"deleteListData",
+			"deleteListData"
 		])
 	},
 	computed: {

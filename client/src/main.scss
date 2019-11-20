@@ -59,6 +59,14 @@ body {
   animation: bounce-in .5s reverse;
 }
 
+.bounce-li-enter-active {
+  animation: bounce-in-li .5s;
+}
+
+.bounce-li-leave-active {
+  animation: bounce-in-li .5s reverse;
+}
+
 // Custom css
 .align-app {
 	margin-top: 30px;
@@ -83,8 +91,28 @@ body {
   }
 }
 
+@keyframes bounce-in-li {
+  0% {
+    opacity: 0;
+		margin-top: -37px;
+		transform: scale(0);
+	}
+	30% {
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+		margin-top: 0px;
+		transform: scale(1);
+  }
+}
+
 @import "./styles/components/bear.scss";
 @import "./styles/components/edit-account.scss";
 @import "./styles/components/login-register.scss";
 @import "./styles/components/user-card.scss";
 @import "./styles/components/view-list.scss";
+@import "./styles/components/dashboard.scss";

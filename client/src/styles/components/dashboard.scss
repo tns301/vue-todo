@@ -1,0 +1,11 @@
+.tables {
+	padding: 1em;
+
+	.overdue {
+		color:#b5b5b5 !important;
+
+		&.el-table thead {
+			color: #b5b5b5 !important;
+		}
+	}
+}
