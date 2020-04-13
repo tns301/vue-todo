@@ -1,5 +1,3 @@
-# vue-todo-app
-
 ## Tools Used:
 ### Front-end:
 * Vue
