@@ -1,5 +1,23 @@
 # vue-todo-app
 
+## Tools Used:
+### Front-end:
+* Vue
+* Vuex
+* Vue router
+* Element UI
+* SASS
+
+### Back-end:
+* Node.js
+* Express.js
+* Axios.js
+* Mongoose.js for database modeling
+* JSON Web Tokens for autentification
+
+### Database: 
+* MongoDB Atlas
+
 ## Project setup
 *  **1.**
 
@@ -34,7 +52,7 @@ npm run server
 npm run server-dev
 ```
 
-<!-- ### Compiles and minifies for production the front-end app
+### Compiles and minifies for production the front-end app
 ```
 npm run build
-``` -->
+```
